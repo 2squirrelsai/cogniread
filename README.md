@@ -1,259 +1,218 @@
-# 📖 CogniRead - Adaptive Reading Assistant
+<div align="center">
 
-**Making the web cognitively accessible for everyone**
+# CogniRead
 
-CogniRead is a Chrome extension that transforms any web content into cognitively accessible formats for users with ADHD, dyslexia, autism, or learning disabilities. Using Chrome's built-in AI APIs, it analyzes page complexity and adapts content in real-time without sending any data to external servers.
+**Adaptive Reading Assistant for Cognitively Accessible Web**
 
-## 🎯 The Problem
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Chrome Extension](https://img.shields.io/badge/Platform-Chrome-4285F4?logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-34A853?logo=googlechrome&logoColor=white)](#)
+[![Built with Chrome AI](https://img.shields.io/badge/AI-On--Device-FF6F00?logo=google&logoColor=white)](#chrome-ai-apis)
+[![Privacy First](https://img.shields.io/badge/Privacy-First-6C47FF)](#privacy--security)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/2squirrelsai/cogniread/pulls)
 
-- **15-20%** of the population has learning differences
-- Web content is designed for neurotypical readers
-- Current accessibility tools focus on visual/hearing impairments, not cognitive accessibility
-- Students and professionals with ADHD/dyslexia spend **3-5x longer** reading and frequently miss key information
+<br />
 
-## ✨ Key Features
+<img src="submission_image_440x280.png" alt="CogniRead - Before and After" width="660" />
 
-### 🎯 Focus Mode
-- Highlights one paragraph at a time
-- Dims surrounding content to reduce distractions
-- Navigate with arrow keys or click
-- Perfect for ADHD users who struggle with information overload
-- **Keyboard shortcut:** `Ctrl+Shift+F` (Mac: `Cmd+Shift+F`)
+<br />
 
-### 📝 TL;DR Mode
-- AI-generated bullet-point summaries
-- Extract key points from long articles
-- Reduces cognitive load for complex topics
-- **Keyboard shortcut:** `Ctrl+Shift+T` (Mac: `Cmd+Shift+T`)
+*Transform any webpage into a cognitively accessible reading experience — powered entirely by on-device AI.*
 
-### 🧒 ELI5 Mode (Explain Like I'm 5)
-- Simplifies complex text to basic language anyone can understand
-- Perfect for scientific articles, legal documents, or technical content
-- Breaks down complex sentences into simple, short ones
-- Replaces jargon with everyday words
-- AI-powered with fallback simplification when AI unavailable
+[Getting Started](#installation) &nbsp;&bull;&nbsp; [Features](#features) &nbsp;&bull;&nbsp; [Usage](#usage) &nbsp;&bull;&nbsp; [Privacy Policy](PRIVACY_POLICY.md) &nbsp;&bull;&nbsp; [Contributing](#contributing)
 
-### 📖 Dyslexia-Friendly Mode
-- Enhanced font and spacing
-- Increased letter spacing (0.12em)
-- Larger line height (1.8)
-- Uses Comic Neue font (dyslexia-friendly)
-
-### 💡 Show Definitions
-- Automatically highlights difficult words in yellow
-- Hover over highlighted words for simple explanations
-- AI-powered definitions in elementary vocabulary
-- Context-aware explanations
-- Helps build vocabulary while reading
-
-### 💬 Literal Language Mode
-- Converts idioms and figurative language to literal meanings
-- Essential for autism spectrum users who interpret language literally
-- Database of 100+ common English idioms
-- Example: "It's raining cats and dogs" → "It's raining very heavily"
-- Helps non-native English speakers understand expressions
-
-### 📈 Progress Tracking
-- Visual progress bar at top of page
-- Shows reading completion percentage
-- Motivates users to finish articles
-
-### 🎨 Smart Content Analysis
-- Flesch Reading Ease scoring
-- Identifies difficult terminology
-- Calculates cognitive complexity (1-10 scale)
-- Estimates reading time
-
-## 🚀 Chrome AI APIs Used
-
-This extension leverages Chrome's built-in AI capabilities:
-
-1. **Summarizer API**: Extract key points and create simplified overviews
-2. **Rewriter API**: Simplify complex sentences, break long paragraphs
-3. **Prompt API (Language Model)**: Analyze cognitive load, identify difficult concepts
-4. **Translator API**: Convert idioms to literal language for autism spectrum users
-
-All processing happens **on-device** for privacy and speed.
-
-## 📦 Installation
-
-### For Development
-
-1. Clone or download this repository
-2. Open Chrome and navigate to `chrome://extensions/`
-3. Enable "Developer mode" (toggle in top-right corner)
-4. Click "Load unpacked"
-5. Select the project directory
-
-### Chrome AI APIs Requirements
-
-To use the AI features, you need Chrome Canary or Dev channel with experimental AI APIs enabled:
-
-1. Download [Chrome Canary](https://www.google.com/chrome/canary/)
-2. Navigate to `chrome://flags/#optimization-guide-on-device-model`
-3. Enable "Optimization Guide On Device Model"
-4. Navigate to `chrome://flags/#prompt-api-for-gemini-nano`
-5. Enable "Prompt API for Gemini Nano"
-6. Restart Chrome
-
-## 🎮 Usage
-
-### Getting Started
-
-1. Click the CogniRead extension icon in your browser toolbar
-2. Navigate to any article or web page
-3. The control panel will appear in the top-right corner
-4. Adjust settings to your preferences
-
-### Control Panel
-
-The floating control panel (can be expanded/minimized) includes:
-
-- **ELI5 Toggle**: Simplify text to 5-year-old comprehension level
-- **Focus Mode Toggle**: One-section-at-a-time reading
-- **TL;DR Mode Toggle**: Bullet-point summaries
-- **Dyslexia Mode Toggle**: Enhanced fonts and spacing
-- **Show Definitions Toggle**: Hover explanations for difficult words
-- **Literal Language Toggle**: Convert idioms to literal meanings
-
-### Keyboard Shortcuts
-
-- `Ctrl+Shift+F` / `Cmd+Shift+F`: Toggle Focus Mode
-- `Ctrl+Shift+T` / `Cmd+Shift+T`: Toggle TL;DR Mode
-- `Arrow Right` / `Space`: Next paragraph (in Focus Mode)
-- `Arrow Left`: Previous paragraph (in Focus Mode)
-- `Escape`: Exit Focus Mode
-
-## 🏗️ Project Structure
-
-```
-.
-├── manifest.json           # Extension configuration (Manifest V3)
-├── content.js             # Main orchestration script (UI & features)
-├── ai-service.js          # Chrome AI APIs wrapper + fallbacks
-├── cognitive-engine.js    # Content analysis and complexity calculation
-├── idioms-dictionary.js   # 100+ idioms for literal translation
-├── background.js          # Background service worker
-├── styles.css             # Accessibility-focused styles
-├── popup.html             # Extension popup UI (future feature)
-├── icons/                 # Extension icons
-├── PRIVACY_POLICY.md      # Comprehensive privacy policy
-├── PUBLISHING_GUIDE.md    # Chrome Web Store publishing guide
-└── README.md              # This file
-```
-
-## 🔧 Technical Details
-
-### Architecture
-
-**CogniRead** uses a modular architecture:
-
-1. **AI Service Layer** (`ai-service.js`)
-   - Handles Chrome AI API initialization
-   - Provides fallback methods when APIs unavailable
-   - Manages text summarization, rewriting, and analysis
-
-2. **Cognitive Engine** (`cognitive-engine.js`)
-   - Extracts and cleans page content
-   - Calculates reading complexity metrics
-   - Identifies difficult terminology
-   - Chunks content for focus mode
-
-3. **Content Script** (`content.js`)
-   - Orchestrates UI and interactions
-   - Manages user preferences
-   - Handles keyboard shortcuts
-   - Controls feature toggles
-
-### Content Analysis Metrics
-
-- **Flesch Reading Ease Score**: Standard readability formula
-- **Average Sentence Length**: Words per sentence
-- **Average Word Length**: Characters per word
-- **Syllable Count**: For complexity assessment
-- **Paragraph Distribution**: Content structure analysis
-
-### Privacy & Security
-
-- ✅ **All processing happens on-device**
-- ✅ **No data sent to external servers**
-- ✅ **No user tracking or analytics**
-- ✅ **No personal data collection**
-- ✅ **Open source and auditable**
-- ✅ **Chrome's built-in AI ensures privacy**
-- ✅ **GDPR and CCPA compliant** (no data collection)
-
-**Read our full [Privacy Policy](PRIVACY_POLICY.md)** for complete details.
-
-## 🎯 Target Users
-
-### Primary Audience
-- People with ADHD
-- People with dyslexia
-- People on the autism spectrum
-- People with learning disabilities
-
-### Secondary Audience
-- Non-native English speakers
-- Elderly users
-- People with temporary cognitive impairment (stress, fatigue)
-- Students learning complex subjects
-
-## 🌟 Why CogniRead is Unique
-
-1. **First Extension Combining Multiple AI APIs** for cognitive accessibility
-2. **Goes Beyond Text-to-Speech** - fundamentally restructures content for comprehension
-3. **On-Device Processing** ensures privacy for users with disabilities
-4. **Addresses Underserved Market** - most tools focus on visual/auditory accessibility
-5. **Real-time Adaptation** - analyzes and adjusts content as you browse
-6. **Customizable Complexity** - adapts to individual needs and preferences
-
-## 🚧 Future Enhancements
-
-- [ ] Options page for global settings
-- [ ] Reading statistics and progress tracking
-- [ ] Custom color themes for visual preferences
-- [ ] Export summaries for note-taking
-- [ ] Integration with text-to-speech
-- [ ] Support for PDF documents
-- [ ] Multi-language support
-- [ ] Reading speed adjustment
-- [ ] Saved reading positions
-- [ ] Chrome Web Store publication
-
-## 📊 Market Opportunity
-
-- **300+ million people** worldwide with dyslexia
-- **366 million adults** with ADHD globally
-- **75 million people** on autism spectrum
-- **$8.3 billion** assistive technology market by 2026
-- Growing awareness of neurodiversity in workplace
-
-## 🤝 Contributing
-
-This is a hackathon project, but contributions are welcome!
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 🙏 Acknowledgments
-
-- Built for Google Hackathon
-- Inspired by the neurodivergent community
-- Powered by Chrome's built-in AI capabilities
-- Special thanks to accessibility advocates and testers
-
-## 📞 Support & Feedback
-
-- Report issues on GitHub
-- Email: tony.turner@gmail.com
-- Twitter: @CogniReadAI (coming soon)
+</div>
 
 ---
 
-**Made with 💜 for the 15-20% of people who think differently**
+## The Problem
 
-*CogniRead - Because everyone deserves to understand the web*
+**15-20% of the population** has a learning difference such as ADHD, dyslexia, or autism. The web is designed for neurotypical readers, and most accessibility tools focus on visual or auditory impairments — leaving cognitive accessibility almost entirely unaddressed. Students and professionals with these conditions spend **3-5x longer** reading and frequently miss key information.
+
+## The Solution
+
+CogniRead is a Chrome extension that analyzes page complexity in real time and adapts content to fit each reader's needs. It combines multiple Chrome built-in AI APIs to simplify text, reduce distractions, and surface key information — all **without sending a single byte to an external server**.
+
+---
+
+## Features
+
+### Reading Modes
+
+| Feature | Description | Shortcut |
+|---------|-------------|----------|
+| **Focus Mode** | Highlights one section at a time, dimming surroundings to reduce distraction | `Ctrl+Shift+F` |
+| **TL;DR Mode** | AI-generated bullet-point summaries of long paragraphs | `Ctrl+Shift+T` |
+| **Distraction-Free Mode** | Clean reader view — strips ads, sidebars, and navigation | `Ctrl+Shift+D` |
+| **Dyslexia-Friendly** | OpenDyslexic font, increased letter/line spacing, reduced visual stress | — |
+
+### Text Transformation
+
+| Feature | Description |
+|---------|-------------|
+| **Simplification Levels** | 5 levels of complexity: Off, ELI5, ELI10, ELI15, College |
+| **Sentence Restructuring** | Breaks complex sentences into simpler structures |
+| **Active Voice Conversion** | Converts passive to active voice for clearer communication |
+| **Tone Adjustment** | Casual, Formal, Encouraging, or Neutral tone options |
+| **Text Expansion** | Automatically expands abbreviations and acronyms |
+
+### Comprehension Aids
+
+| Feature | Description |
+|---------|-------------|
+| **Word Definitions** | Hover over difficult words for instant, context-aware definitions |
+| **Literal Language** | Converts idioms and figurative language to literal meanings (100+ idioms) |
+| **Plain Language Translation** | Converts legal, medical, or academic jargon into plain English |
+| **Prerequisites Check** | Identifies prerequisite knowledge needed before reading an article |
+| **Reading Goals** | Surfaces learning objectives, difficulty level, and estimated reading time |
+| **Difficulty Heatmap** | Color-coded visualization of cognitive load across sections |
+
+### Progress & Analysis
+
+- Visual reading progress bar with completion percentage
+- Flesch Reading Ease scoring and cognitive complexity rating (1-10)
+- Reading time estimation
+
+---
+
+## Chrome AI APIs
+
+CogniRead leverages Chrome's built-in AI for fully on-device processing:
+
+| API | Used For |
+|-----|----------|
+| **Summarizer API** | TL;DR summaries and key point extraction |
+| **Rewriter API** | Text simplification, sentence restructuring, tone adjustment |
+| **Prompt API (Gemini Nano)** | Definitions, cognitive analysis, difficulty heatmaps |
+| **Translator API** | Literal language conversion for idioms and figurative speech |
+
+> All AI inference runs locally on your device. No data leaves your browser.
+
+---
+
+## Installation
+
+### Load as Unpacked Extension
+
+```bash
+git clone https://github.com/2squirrelsai/cogniread.git
+```
+
+1. Open Chrome and navigate to `chrome://extensions/`
+2. Enable **Developer mode** (toggle in top-right corner)
+3. Click **Load unpacked**
+4. Select the cloned `cogniread` directory
+
+### Enable Chrome AI APIs
+
+Chrome AI features require Chrome Canary or Dev channel:
+
+1. Install [Chrome Canary](https://www.google.com/chrome/canary/)
+2. Enable `chrome://flags/#optimization-guide-on-device-model`
+3. Enable `chrome://flags/#prompt-api-for-gemini-nano`
+4. Restart Chrome
+
+> CogniRead works without AI APIs enabled — features degrade gracefully to local fallback algorithms.
+
+---
+
+## Usage
+
+1. Navigate to any webpage with text content
+2. Click the **CogniRead** icon in the toolbar and press **Activate on this Page**
+3. A floating control panel appears on the page — toggle features as needed
+4. Use keyboard shortcuts for quick access
+
+### Keyboard Shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Toggle Focus Mode | `Ctrl+Shift+F` / `Cmd+Shift+F` |
+| Toggle TL;DR Mode | `Ctrl+Shift+T` / `Cmd+Shift+T` |
+| Toggle Distraction-Free | `Ctrl+Shift+D` / `Cmd+Shift+D` |
+| Navigate sections (Focus) | `Arrow Left` / `Arrow Right` |
+| Adjust font size (Reader) | `+` / `-` |
+| Exit current mode | `Escape` |
+
+---
+
+## Architecture
+
+```
+cogniread/
+├── manifest.json            # Extension config (Manifest V3)
+├── content.js               # UI orchestration and feature toggles
+├── ai-service.js            # Chrome AI API wrapper with fallbacks
+├── cognitive-engine.js      # Content analysis and complexity scoring
+├── prompt-api-service.js    # Prompt API integration layer
+├── idioms-dictionary.js     # 100+ idioms for literal translation
+├── background.js            # Service worker for extension lifecycle
+├── styles.css               # Accessibility-focused stylesheets
+├── popup.html / popup.js    # Extension popup interface
+├── demo.html                # Interactive feature demo page
+└── icons/                   # Extension icons (16/48/128px)
+```
+
+**Three-layer design:**
+
+1. **AI Service Layer** — initializes Chrome AI APIs, manages sessions, provides graceful fallbacks when APIs are unavailable
+2. **Cognitive Engine** — extracts page content, calculates readability metrics (Flesch score, syllable count, sentence complexity), chunks content for focus mode
+3. **Content Script** — orchestrates UI, manages feature state, handles keyboard shortcuts, and coordinates between the AI and engine layers
+
+---
+
+## Privacy & Security
+
+| | |
+|---|---|
+| All processing on-device | No external API calls |
+| No user tracking or analytics | No personal data collection |
+| No cookies or third-party scripts | Open source and auditable |
+| GDPR and CCPA compliant | Zero server infrastructure |
+
+CogniRead has **no servers**. Your reading habits, preferences, and page content never leave your browser. Chrome's `storage.sync` API stores your feature preferences locally (and across your Chrome instances if sync is enabled).
+
+Read the full [Privacy Policy](PRIVACY_POLICY.md).
+
+---
+
+## Target Audience
+
+- People with **ADHD**, **dyslexia**, or **autism spectrum** conditions
+- People with learning disabilities or temporary cognitive impairment
+- Non-native English speakers
+- Students working through complex academic material
+- Anyone who wants a distraction-free, simplified reading experience
+
+---
+
+## Contributing
+
+Contributions are welcome. To get started:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Make your changes and test thoroughly
+4. Submit a pull request
+
+Please open an [issue](https://github.com/2squirrelsai/cogniread/issues) first for significant changes so we can discuss the approach.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+
+**Made for the 15-20% of people who think differently.**
+
+*CogniRead — because everyone deserves to understand the web.*
+
+<br />
+
+Built by [2 Squirrels AI](https://github.com/2squirrelsai) &nbsp;&bull;&nbsp; Powered by [Chrome Built-in AI](https://developer.chrome.com/docs/ai/built-in)
+
+</div>
